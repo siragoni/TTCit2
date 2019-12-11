@@ -621,10 +621,9 @@ port map (
    div_nrst      => FMC_HPC_LA10_P_s,   -- clock divider sy89872 async reset control, used to align the phase of 40mhz clock divider output relative to the input stream
    info_o        => ttc_data,     
    stat_o        => ttc_status,
-   --== auxiliary outputs ===--
-   cdrclk_out    => open,            -- 160 MhZ clock out    
+   --== auxiliary outputs ===--    
    ready         => FMC_HPC_LA05_N, -- out, User LED on FMC TTC card     
-   ttc_clk_gated => clk_bc          -- out, gated 40MHz clock, for comparison only
+   ttc_clk_gated => open          -- out, gated 40MHz clock, for comparison only
 );
 
 FMC_HPC_LA10_P <= FMC_HPC_LA10_P_s;
@@ -733,7 +732,7 @@ STARTUPE3_inst: STARTUPE3
 -- ============================================================
     with scope_a select
     SCOPE_A_FP  <= FMC_HPC_CLK0_M2C when x"00000001",  -- ADN2812 CDR 160MHz clock output
-                   FMC_HPC_CLK1_M2C when x"00000002",  -- 40MHz clock from divider
+                   FMC_HPC_CLK1_M2C when x"00000002",  -- 40MHz clock from FMC TTC divider
                    FMC_HPC_LA09 when x"00000003",      -- ADN2812 CDR Serial Data output
                    FMC_HPC_LA08_N when x"00000004",    -- ADN2812 CDR Loss Of Sync flag. Active high.
                    FMC_HPC_LA08_P when x"00000005",    -- ADN2812 CDR Loss Of Sync flag. Active high.
@@ -1048,6 +1047,12 @@ IBUFDS_FMC_HPC_CLK1_M2C: IBUFDS
                 I => (FMC_HPC_CLK1_M2C_P),   -- 1-bit inout: Diff_p input (connect directly to top-level port)
                 IB=> (FMC_HPC_CLK1_M2C_N)  -- 1-bit inout: Diff_n input (connect directly to top-level port)         
    );      
+
+bufg_clk_bc: BUFG 
+        port map(
+		  i => FMC_HPC_CLK1_M2C,
+		  o => clk_bc
+	);
 
 -- |---------------------------------------------| 
 -- |    FMC_HPC_CLK0_M2C                         |

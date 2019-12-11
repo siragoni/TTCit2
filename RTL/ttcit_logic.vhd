@@ -112,8 +112,10 @@ entity ttcit_logic is
 --  FMC board IOs
 --=================================================
         FMC_HPAC_PG_M2C        : in std_logic; 
-        FMC_HPC_PRSNT_M2C_B    : in   std_logic; 
-        VADJ1V8_PGOOD          : in std_logic;  
+        FMC_HPC_PRSNT_M2C_B    : in std_logic; 
+        VADJ1V8_PGOOD          : in std_logic;
+        FMC_HPC_CLK0_M2C_P     : in std_logic; 
+        FMC_HPC_CLK0_M2C_N     : in std_logic;   
         FMC_HPC_CLK1_M2C_P     : in std_logic; 
         FMC_HPC_CLK1_M2C_N     : in std_logic; 
         FMC_HPC_LA05_N         : out std_logic; -- User LED on FMC TTC card
@@ -361,7 +363,7 @@ end entity ttcit_logic;
 --==================================================
 --    signal FMC_HPC_GBTCLK0_M2C : std_logic := '0';
 --    signal FMC_HPC_GBTCLK1_M2C : std_logic := '0';
---    signal FMC_HPC_CLK0_M2C: std_logic := '0';
+    signal FMC_HPC_CLK0_M2C: std_logic := '0';
     signal FMC_HPC_CLK1_M2C: std_logic := '0';
 ----------------------------------------------------
     signal FMC_HPC_LA09    : std_logic := '0'; 
@@ -601,7 +603,7 @@ ADC : process(ipb_clk) is begin
 TTC_FMC: entity work.ttc_fmc_wrapper
 port map (
 --== ttc fmc interface ==--
-   cdrclk_in     => FMC_HPC_CLK1_M2C, -- ADN2812 CDR 160MHz clock output
+   cdrclk_in     => FMC_HPC_CLK0_M2C, -- ADN2812 CDR 160MHz clock output
    cdrdata_in    => FMC_HPC_LA09,     -- ADN2812 CDR Serial Data output
    ttc_los       => FMC_HPC_LA08_N,   -- ADN2812 CDR Loss Of Sync flag. Active high.
    ttc_lol       => FMC_HPC_LA08_P,   -- ADN2812 CDR Loss Of Sync flag. Active high.
@@ -609,9 +611,9 @@ port map (
    info_o        => ttc_data,     
    stat_o        => ttc_status,
    --== auxiliary outputs ===--
-   cdrclk_out    =>  clk_bc,        -- out    
-   ready         =>  FMC_HPC_LA05_N, -- out, User LED on FMC TTC card     
-   ttc_clk_gated =>  open -- out, gated 40MHz clock, for comparison only
+   cdrclk_out    => open,            -- 160 MhZ clock out    
+   ready         => FMC_HPC_LA05_N, -- out, User LED on FMC TTC card     
+   ttc_clk_gated => clk_bc          -- out, gated 40MHz clock, for comparison only
 );
 
 FMC_HPC_LA10_P <= FMC_HPC_LA10_P_s;
@@ -719,12 +721,13 @@ STARTUPE3_inst: STARTUPE3
 -- ==   Temporary assigned all inputs !!!                    == 
 -- ============================================================
     with scope_a select
-    SCOPE_A_FP  <= FMC_HPC_CLK1_M2C when x"00000001",  -- ADN2812 CDR 160MHz clock output
-                   FMC_HPC_LA09 when x"00000002",      -- ADN2812 CDR Serial Data output
-                   FMC_HPC_LA08_N when x"00000003",    -- ADN2812 CDR Loss Of Sync flag. Active high.
-                   FMC_HPC_LA08_P when x"00000004",    -- ADN2812 CDR Loss Of Sync flag. Active high.
-                   FMC_HPC_LA10_P_s when x"00000005",  -- clock divider sy89872 async reset control, used to align the phase of 40mhz clock divider output relative to the input stream
-                   FMC_HPC_LA05_N_s when x"00000006",  -- user LED -> connected signal READY from TTC_FMC module
+    SCOPE_A_FP  <= FMC_HPC_CLK0_M2C when x"00000001",  -- ADN2812 CDR 160MHz clock output
+                   FMC_HPC_CLK1_M2C when x"00000002",  -- 40MHz clock from divider
+                   FMC_HPC_LA09 when x"00000003",      -- ADN2812 CDR Serial Data output
+                   FMC_HPC_LA08_N when x"00000004",    -- ADN2812 CDR Loss Of Sync flag. Active high.
+                   FMC_HPC_LA08_P when x"00000005",    -- ADN2812 CDR Loss Of Sync flag. Active high.
+                   FMC_HPC_LA10_P_s when x"00000006",  -- clock divider sy89872 async reset control, used to align the phase of 40mhz clock divider output relative to the input stream
+                   FMC_HPC_LA05_N_s when x"00000007",  -- user LED -> connected signal READY from TTC_FMC module
                     '0' when others;
                     
     with scope_b select 
@@ -738,8 +741,6 @@ STARTUPE3_inst: STARTUPE3
                     FMC_HPAC_PG_M2C     when x"00000008", -- no loop-back on XM107
                     FMC_HPC_PRSNT_M2C_B when x"00000009", -- no loop-back on XM107
                     VADJ1V8_PGOOD       when x"0000000A", -- no loop-back on XM107
---                    FMC_HPC_CLK0_M2C    when x"0000000B", -- there is loop-back on KAYA or clock on XM107
-                    FMC_HPC_CLK1_M2C    when x"0000000C", -- there is loop-back on KAYA or clock on ZM107
 --                    FMC_HPC_GBTCLK0_M2C when x"0000000D", -- there is clock on KAYA, XM107, S-18
 --                    FMC_HPC_GBTCLK1_M2C when x"0000000E", -- there is clock on KAYA, XM107, S-18
                     FMC_HPC_LA09 when x"0000001F",
@@ -1043,12 +1044,16 @@ IBUFDS_FMC_HPC_CLK1_M2C: IBUFDS
 -- |---------------------------------------------| 
 -- |    FMC_HPC_CLK0_M2C                         |
 -- |---------------------------------------------|
---IBUFDS_FMC_HPC_CLK0_M2C: OBUFDS
---    port map (
---                O  => FMC_HPC_CLK0_M2C_P,    -- 1-bit output: Buffer output
---                OB => FMC_HPC_CLK0_M2C_N,   -- 1-bit inout: Diff_p input (connect directly to top-level port)
---                I=> clk_bc  -- 1-bit inout: Diff_n input (connect directly to top-level port)
---   ); 
+IBUFDS_FMC_HPC_CLK0_M2C: IBUFDS
+    generic map (
+                   DIFF_TERM => TRUE, -- Differential Termination (TRUE/FALSE)
+                   IBUF_LOW_PWR => TRUE, -- Low Power = TRUE, High Performance = FALSE
+                   IOSTANDARD => "LVDS") -- Specify the I/O standard 
+    port map (
+                O  => (FMC_HPC_CLK0_M2C),    -- 1-bit output: Buffer output
+                I => (FMC_HPC_CLK0_M2C_P),   -- 1-bit inout: Diff_p input (connect directly to top-level port)
+                IB=> (FMC_HPC_CLK0_M2C_N)  -- 1-bit inout: Diff_n input (connect directly to top-level port)         
+   );
 
 -- |---------------------------------------------| 
 -- |     FMC_HPC_LA07     --Channel 3  TX_FAULT     |

@@ -142,7 +142,7 @@ stat_ctrl_regs: entity work.ipbus_ctrlreg_v
 		);
 
     stat(0) <= x"000000" & sn(7 downto 0); -- Board ID
-    stat(1) <= x"0d000100"; -- FW info: type[31:24] = xD->ttcit_logic, version[23:8] -> .., subversion[7:0] -> .. 
+    stat(1) <= x"0d000101"; -- FW info: type[31:24] = xD->ttcit_logic, version[23:8] -> .., subversion[7:0] -> .. 
     stat(2) <= x"0000000" & '0' & '0' & SI5345_INTR & SI5345_LOL ; -- STARUS reg
     stat(3) <= x"00000000"; -- dummy reg
 	
@@ -323,7 +323,7 @@ ssm_data_s(31 downto 18) <= ttc_data_i.adr_a14;
 ssm_data_s(17) <= ttc_data_i.adr_e;      
 ssm_data_s(16 downto 9) <= ttc_data_i.adr_s8;     
 ssm_data_s(8 downto 1) <= ttc_data_i.adr_d8;     
-ssm_data_s(0) <= ttc_data_i.clk40_gated;
+ssm_data_s(0) <= '1'; --ttc_data_i.clk40_gated;
 
 ssm: entity work.ipbus_ssm_clkbc
 		port map(

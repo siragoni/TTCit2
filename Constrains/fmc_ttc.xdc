@@ -5,7 +5,14 @@
 #--------------------------------------------+
 #--------------------------------------------+
 
-#-- clock from ADN2812 CDR
+#-- 160 Mhz clock from ADN2812 CDR
+set_property PACKAGE_PIN H12 [get_ports FMC_HPC_CLK0_M2C_P]
+set_property IOSTANDARD LVDS [get_ports FMC_HPC_CLK0_M2C_P]
+set_property IOSTANDARD LVDS [get_ports FMC_HPC_CLK0_M2C_N]
+set_property DIFF_TERM_ADV TERM_100 [get_ports FMC_HPC_CLK0_M2C_P]
+##set_property ODT RTT_NONE [get_ports FMC_HPC_CLK0_M2C_P]
+
+#-- 40 Mhz clock from ADN2812 CDR
 set_property PACKAGE_PIN E25 [get_ports FMC_HPC_CLK1_M2C_P]
 set_property IOSTANDARD LVDS [get_ports FMC_HPC_CLK1_M2C_P]
 set_property IOSTANDARD LVDS [get_ports FMC_HPC_CLK1_M2C_N]

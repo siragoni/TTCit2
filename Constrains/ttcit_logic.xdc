@@ -43,17 +43,17 @@ set_multicycle_path -hold -start -from [get_pins -hierarchical -filter {NAME =~*
 ## ==   IP bus                             ==
 ## ==========================================
 ## --     B A N K  227
-set_property PACKAGE_PIN M5 [get_ports SI5345_I_OUT0_N]
-set_property PACKAGE_PIN M6 [get_ports SI5345_I_OUT0_P]
+set_property PACKAGE_PIN M5 [get_ports SI5345_I_OUT8_N]
+set_property PACKAGE_PIN M6 [get_ports SI5345_I_OUT8_P]
 set_property PACKAGE_PIN F1 [get_ports SFP_RX_N]
 set_property PACKAGE_PIN G3 [get_ports SFP_TX_N]
 set_property PACKAGE_PIN G4 [get_ports SFP_TX_P]
 set_property PACKAGE_PIN F2 [get_ports SFP_RX_P]
 ## --     B A N K  66
-set_property PACKAGE_PIN G10 [get_ports SI5345_I_OUT1_P]
-set_property IOSTANDARD LVDS [get_ports SI5345_I_OUT1_P]
-#set_property DIFF_TERM_ADV TERM_100 [get_ports SI5345_I_OUT1_P]
-##set_property ODT RTT_NONE [get_ports SI5345_I_OUT1_P]
+set_property PACKAGE_PIN G10 [get_ports SI5345_I_OUT9_P]
+set_property IOSTANDARD LVDS [get_ports SI5345_I_OUT9_P]
+#set_property DIFF_TERM_ADV TERM_100 [get_ports SI5345_I_OUT9_P]
+##set_property ODT RTT_NONE [get_ports SI5345_I_OUT9_P]
 ## --     B A N K  48
 ## set false path !!!
 set_property IOSTANDARD LVCMOS18 [get_ports {sn[*]}]
@@ -562,10 +562,10 @@ set_property IOSTANDARD LVDS [get_ports DATA12_P]
 set_property DIFF_TERM_ADV TERM_100 [get_ports DATA12_P]
 ##set_property ODT RTT_NONE [get_ports DATA12_P]
 # ----------------------------------------------------------------------------
-set_property PACKAGE_PIN AC32 [get_ports SI5345_OUT5_N]
-set_property PACKAGE_PIN AC31 [get_ports SI5345_OUT5_P]
-set_property IOSTANDARD LVDS [get_ports SI5345_OUT5_P]
-set_property DIFF_TERM_ADV TERM_100 [get_ports SI5345_OUT5_P]
+#set_property PACKAGE_PIN AC32 [get_ports SI5345_OUT5_N]
+#set_property PACKAGE_PIN AC31 [get_ports SI5345_OUT5_P]
+#set_property IOSTANDARD LVDS [get_ports SI5345_OUT5_P]
+#set_property DIFF_TERM_ADV TERM_100 [get_ports SI5345_OUT5_P]
 ##set_property ODT RTT_NONE [get_ports SI5345_OUT5_P]
 
 ### =============================================================================
@@ -624,15 +624,15 @@ set_property IOSTANDARD LVCMOS33 [get_ports LED_20]
 set_property SLEW SLOW [get_ports LED_20]
 
 ### ----------------------------------------------------------------------------
-set_property PACKAGE_PIN AH12 [get_ports SI5345_I_OUT6_N]
-set_property PACKAGE_PIN AG12 [get_ports SI5345_I_OUT6_P]
-set_property IOSTANDARD LVDS_25 [get_ports SI5345_I_OUT6_P]
-###set_property DIFF_TERM_ADV TERM_100 [get_ports SI5345_I_OUT6_P]
-###set_property ODT RTT_NONE [get_ports SI5345_I_OUT6_P]
+set_property PACKAGE_PIN AH12 [get_ports SI5345_I_OUT3_N]
+set_property PACKAGE_PIN AG12 [get_ports SI5345_I_OUT3_P]
+set_property IOSTANDARD LVDS_25 [get_ports SI5345_I_OUT3_P]
+###set_property DIFF_TERM_ADV TERM_100 [get_ports SI5345_I_OUT3_P]
+###set_property ODT RTT_NONE [get_ports SI5345_I_OUT3_P]
 ### -----------------------------------------------------------------------------
-set_property PACKAGE_PIN AH11 [get_ports SI5345_OUT6_N]
-set_property PACKAGE_PIN AG11 [get_ports SI5345_OUT6_P]
-set_property IOSTANDARD LVDS_25 [get_ports SI5345_OUT6_P]
+#set_property PACKAGE_PIN AH11 [get_ports SI5345_OUT6_N]
+#set_property PACKAGE_PIN AG11 [get_ports SI5345_OUT6_P]
+#set_property IOSTANDARD LVDS_25 [get_ports SI5345_OUT6_P]
 ###set_property DIFF_TERM_ADV TERM_100 [get_ports SI5345_OUT6_P]
 ### ---------------------------------------------------------------------------------
 set_property PACKAGE_PIN AF10 [get_ports ORBIT_P]
@@ -995,10 +995,10 @@ set_property PACKAGE_PIN AB21 [get_ports BC_P_ONU]
 set_property PACKAGE_PIN AC21 [get_ports BC_N_ONU]
 set_property IOSTANDARD LVDS [get_ports BC_P_ONU]
 ### -----------------------------------------------------------------------#
-set_property PACKAGE_PIN Y23 [get_ports SI5345_I_OUT7_P]
-set_property PACKAGE_PIN AA23 [get_ports SI5345_I_OUT7_N]
-set_property IOSTANDARD LVDS [get_ports SI5345_I_OUT7_P]
-set_property DIFF_TERM_ADV TERM_100 [get_ports SI5345_I_OUT7_P]
+set_property PACKAGE_PIN Y23 [get_ports SI5345_I_OUT4_P]
+set_property PACKAGE_PIN AA23 [get_ports SI5345_I_OUT4_N]
+set_property IOSTANDARD LVDS [get_ports SI5345_I_OUT4_P]
+set_property DIFF_TERM_ADV TERM_100 [get_ports SI5345_I_OUT4_P]
 ####-------------------------------------------------------------------------#
 set_property IOSTANDARD LVCMOS18 [get_ports SFP_TX_DISABLE]
 set_property PACKAGE_PIN U29 [get_ports SFP_TX_DISABLE]
@@ -1156,16 +1156,16 @@ set_property IOSTANDARD LVCMOS18 [get_ports QSPI_1_CLK]
 set_property SLEW SLOW [get_ports QSPI_1_CLK]
 
 ### ++ ***********************************************************************+
-set_property PACKAGE_PIN AD30 [get_ports SI5345_I_OUT5_P]
-set_property PACKAGE_PIN AD31 [get_ports SI5345_I_OUT5_N]
-set_property IOSTANDARD LVDS [get_ports SI5345_I_OUT5_P]
-set_property DIFF_TERM_ADV TERM_100 [get_ports SI5345_I_OUT5_P]
-###set_property ODT RTT_NONE [get_ports SI5345_I_OUT5_P]
+set_property PACKAGE_PIN AD30 [get_ports SI5345_I_OUT2_P]
+set_property PACKAGE_PIN AD31 [get_ports SI5345_I_OUT2_N]
+set_property IOSTANDARD LVDS [get_ports SI5345_I_OUT2_P]
+set_property DIFF_TERM_ADV TERM_100 [get_ports SI5345_I_OUT2_P]
+###set_property ODT RTT_NONE [get_ports SI5345_I_OUT2_P]
 ### ++ *********************************************************************+
-set_property PACKAGE_PIN AA24 [get_ports SI5345_OUT8_P]
-set_property PACKAGE_PIN AA25 [get_ports SI5345_OUT8_N]
-set_property IOSTANDARD LVDS [get_ports SI5345_OUT8_P]
-set_property DIFF_TERM_ADV TERM_100 [get_ports SI5345_OUT8_P]
+#set_property PACKAGE_PIN AA24 [get_ports SI5345_OUT8_P]
+#set_property PACKAGE_PIN AA25 [get_ports SI5345_OUT8_N]
+#set_property IOSTANDARD LVDS [get_ports SI5345_OUT8_P]
+#set_property DIFF_TERM_ADV TERM_100 [get_ports SI5345_OUT8_P]
 ###set_property ODT RTT_NONE [get_ports SI5345_OUT8_P]
 ### ++ ***********************************************************************
 
@@ -2125,9 +2125,9 @@ set_property IOSTANDARD LVCMOS18 [get_ports SFP_12_PDOWN_TRI_TR]
 ###set_property ODT RTT_NONE [get_ports FMC_HPC_LA27_P]
 ### +------------------------------------------------------------------+
 
-set_property PACKAGE_PIN D23 [get_ports SI5345_OUT1_P]
-set_property PACKAGE_PIN C23 [get_ports SI5345_OUT1_N]
-set_property IOSTANDARD LVDS [get_ports SI5345_OUT1_P]
+#set_property PACKAGE_PIN D23 [get_ports SI5345_OUT1_P]
+#set_property PACKAGE_PIN C23 [get_ports SI5345_OUT1_N]
+#set_property IOSTANDARD LVDS [get_ports SI5345_OUT1_P]
 ##set_property DIFF_TERM_ADV TERM_100 [get_ports SI5345_OUT1_P]
 ##set_property ODT RTT_NONE [get_ports SI5345_OUT1_P]
 ## +------------------------------------------------------------------+

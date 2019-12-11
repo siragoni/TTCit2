@@ -25,10 +25,10 @@ entity ttcit_logic is
 --==========================================
 --  IP bus
 --==========================================
-        SI5345_I_OUT0_P   : in   std_logic;  --  Comment: 156.25 MHz MGT clock (eth clk), bank 227
-        SI5345_I_OUT0_N   : in   std_logic; 
-        SI5345_I_OUT1_P   : in   std_logic;  --  Comment: Sys clk 125 MHz, bank 66
-        SI5345_I_OUT1_N   : in   std_logic;
+        SI5345_I_OUT8_P   : in   std_logic;  --  Comment: 156.25 MHz MGT clock (eth clk), bank 227
+        SI5345_I_OUT8_N   : in   std_logic; 
+        SI5345_I_OUT9_P   : in   std_logic;  --  Comment: Sys clk 125 MHz, bank 66
+        SI5345_I_OUT9_N   : in   std_logic;
 		SFP_RX_P          : in    std_logic; --  Comment: Ethernet MGT input
         SFP_RX_N          : in    std_logic; 
         SFP_TX_P          : out   std_logic; --  Comment: Ethernet MGT output
@@ -186,31 +186,42 @@ entity ttcit_logic is
 --===========================================
 -- Clocks
 --===========================================
-        SI5345_I_OUT5_P : in std_logic; --  Comment: 40 MHz clock for test purposes
-        SI5345_I_OUT5_N : in std_logic;
-        SI5345_I_OUT6_P : in std_logic; --  Comment: 40 MHz clock for test purposes
-        SI5345_I_OUT6_N : in std_logic;
-        SI5345_I_OUT7_P : in std_logic; --  Comment: 40 Mhz clock for test
-        SI5345_I_OUT7_N : in std_logic; --           ***  IBERT  CLOCK Must be 240 MHz.*** 
-        
----    DDR Memory clockls 
--- --------------------------
---        SI5345_I_OUT8_P : in std_logic; --> ddr4_0_inst0_c0_sys_clk, 300 MHz clock for DDR4_1 
---        SI5345_I_OUT8_N : in std_logic;
---        SI5345_I_OUT9_P : in std_logic; --> ddr4_1_inst0_c0_sys_clk, 300 MHz clock for DDR4_2
---        SI5345_I_OUT9_N : in std_logic;
--- -------------------------------------------------------------
-        SI5345_OUT1_P :  in std_logic;     -- Comment: LHC clk for FMC part of FPGA code
-        SI5345_OUT1_N :  in std_logic;
-        SI5345_OUT5_P :  in std_logic;     -- Comment: LHC clk for LLI part of FPGA code
-        SI5345_OUT5_N :  in std_logic;
-        SI5345_OUT6_P :  in std_logic;     -- Comment: LHC clk
-        SI5345_OUT6_N :  in std_logic;
---     SI5345_I_OUT7 goes to SMA connectors
-        SI5345_OUT8_P :  in  std_logic;    -- Comment: LHC clk
-        SI5345_OUT8_N :  in  std_logic; 
-        BC_P_ONU :       out std_logic;    -- Comment: LHC clk reconstructed from ONU
-        BC_N_ONU :       out std_logic;     
+--     SI5345_I_OUT0_P : in std_logic; --> ddr4_0_inst0_c0_sys_clk, 300 MHz clock for DDR4_1 
+--     SI5345_I_OUT0_N : in std_logic;
+--     SI5345_I_OUT1_P : in std_logic; --> ddr4_1_inst0_c0_sys_clk, 300 MHz clock for DDR4_2
+--     SI5345_I_OUT1_N : in std_logic;
+       SI5345_I_OUT2_P : in std_logic; -- 40 MHz clock bank 48 for test purposes
+       SI5345_I_OUT2_N : in std_logic;
+       SI5345_I_OUT3_P : in std_logic; -- 40 MHz clock for test purposes
+       SI5345_I_OUT3_N : in std_logic;
+       SI5345_I_OUT4_P : in std_logic; -- 200 MHz stanalone clock used for OLT usr
+       SI5345_I_OUT4_N : in std_logic;
+--       SI5345_I_OUT5_P : in std_logic; -- ref clk 1 for bank 224 (240 MHz standalone clock for OLT)
+--       SI5345_I_OUT5_N : in std_logic;
+--       SI5345_I_OUT6_P : in std_logic; -- ref clk 1 for bank 225 (240 MHz standalone clock for ONU)
+--       SI5345_I_OUT6_N : in std_logic;
+--     SI5345_I_OUT7_P : in std_logic; -- ref clk 1 for bank 226 (stanalone clock - not used)
+--     SI5345_I_OUT7_N : in std_logic;
+-----------------------------------------------------------------------------------------------------------------
+--     SI5345_OUT0 goes to SMA connectors   
+--       SI5345_OUT1_P :  in std_logic; -- LHC clk for future LLI part of FPGA code, bank 48
+--       SI5345_OUT1_N :  in std_logic;
+--       SI5345_OUT2_P :  in std_logic; -- LHC clk, bank 47
+--       SI5345_OUT2_N :  in std_logic; 
+--       SI5345_OUT3_P :  in std_logic; -- clk_bc used in CTP emulator, ........, bank 64
+--       SI5345_OUT3_N :  in std_logic;
+--       SI5345_OUT4_P : in std_logic; -- LHC clk for FMC part of FPGA code, bank 67
+--       SI5345_OUT4_N : in std_logic;
+--       SI5345_OUT5_P : in std_logic; -- ref clk 0 for bank 224 (not used), bank 224
+--       SI5345_OUT5_N : in std_logic;
+--       SI5345_OUT6_P : in std_logic; -- ref clk 0 for bank 225 (240.471 MHz for OLT), bank 225
+--       SI5345_OUT6_N : in std_logic;
+--       SI5345_OUT7_P : in std_logic; -- ref clk 0 for bank 226 (240.471 MHz for ONU)
+--       SI5345_OUT7_N : in std_logic;
+--     SI5345_OUT8_P : in std_logic; -- ref clk 0 for bank 227 (not used)
+--     SI5345_OUT8_N : in std_logic;
+       BC_P_ONU :  out std_logic; -- LHC clk reconstructed from ONU
+       BC_N_ONU :  out std_logic;
 --==========================================
 -- Front panel IOs
 --==========================================        
@@ -351,10 +362,10 @@ end entity ttcit_logic;
 --==================================================
 -- test clock 40 MHz
 --==================================================
-    signal test_clk_1      : std_logic := '0';
-    signal test_clk_2      : std_logic := '0';
-    signal test_clk_3      : std_logic := '0';
-    signal test_clk_4      : std_logic := '0';
+--    signal test_clk_1      : std_logic := '0';
+--    signal test_clk_2      : std_logic := '0';
+--    signal test_clk_3      : std_logic := '0';
+--    signal test_clk_4      : std_logic := '0';
     signal test_clk_i_1      : std_logic := '0';
     signal test_clk_i_2      : std_logic := '0';
     signal test_clk_i_3      : std_logic := '0';
@@ -468,10 +479,10 @@ begin
 
     infra: entity work.kcu105_basex_infra
         port map ( 
-            sysclk_p  => SI5345_I_OUT1_P,
-            sysclk_n  => SI5345_I_OUT1_N,
-            eth_clk_p => SI5345_I_OUT0_P,
-            eth_clk_n => SI5345_I_OUT0_N,
+            sysclk_p  => SI5345_I_OUT9_P,
+            sysclk_n  => SI5345_I_OUT9_N,
+            eth_clk_p => SI5345_I_OUT8_P,
+            eth_clk_n => SI5345_I_OUT8_N,
             eth_tx_p  => SFP_TX_P,
             eth_tx_n  => SFP_TX_N,
             eth_rx_p  => SFP_RX_P, 
@@ -622,12 +633,12 @@ FMC_HPC_LA05_N <= FMC_HPC_LA05_N_s;
 --======================================================
 -- ALL outputs with test clock
 --======================================================
-    LM0_OUT1 <= test_clk_3;
-    LM0_OUT2 <= test_clk_3;
-    BUSY_OUT <= test_clk_3;
-    TTC_A_OUT <= test_clk_3;
-    TTC_B_OUT <= test_clk_3;
-    SPARE_OUT <= test_clk_3;
+    LM0_OUT1 <= test_clk_i_3;
+    LM0_OUT2 <= test_clk_i_3;
+    BUSY_OUT <= test_clk_i_3;
+    TTC_A_OUT <= test_clk_i_3;
+    TTC_B_OUT <= test_clk_i_3;
+    SPARE_OUT <= test_clk_i_3;
         
 --======================================================
 
@@ -748,9 +759,9 @@ STARTUPE3_inst: STARTUPE3
                     test_clk_i_1  when x"00000031", -- free running clk
                     test_clk_i_2  when x"00000032", -- free running clk
                     test_clk_i_3  when x"00000033", -- free running clk
-                    test_clk_1  when x"00000034", -- LHC clock
-                    test_clk_2  when x"00000035", -- LHC clock
-                    test_clk_3  when x"00000036", -- LHC clock
+--                    test_clk_1  when x"00000034", -- LHC clock
+--                    test_clk_2  when x"00000035", -- LHC clock
+--                    test_clk_3  when x"00000036", -- LHC clock
                     DATA1_S when x"00000037",
                     DATA2_S when x"00000038", 
                     DATA3_S when x"00000039", 
@@ -816,55 +827,52 @@ STARTUPE3_inst: STARTUPE3
 
 ibuf_c_i_5: IBUFDS
 		port map(
-			i => Si5345_I_OUT5_P,
-			ib => Si5345_I_OUT5_N,
+			i => Si5345_I_OUT2_P,
+			ib => Si5345_I_OUT2_N,
 			o => test_clk_i_1
 		);
 
 ibuf_c_i_6: IBUFDS
 		port map(
-			i => Si5345_I_OUT6_P,
-			ib => Si5345_I_OUT6_N,
+			i => Si5345_I_OUT3_P,
+			ib => Si5345_I_OUT3_N,
 			o => test_clk_i_2
 		);
-        
--- =============================
--- === IBERT  CLOCK  Line 1195
--- =============================
+
 ibuf_c_i_7: IBUFDS
 		port map(
-		    i => Si5345_I_OUT7_P,
-			ib => Si5345_I_OUT7_N,
+		    i => Si5345_I_OUT4_P,
+			ib => Si5345_I_OUT4_N,
 			o => test_clk_i_3
 		 );
 
-ibuf_c_1: IBUFDS
-		port map(
-			i => Si5345_OUT1_P,
-			ib => Si5345_OUT1_N,
-			o => test_clk_1
-		);
+--ibuf_c_1: IBUFDS
+--		port map(
+--			i => Si5345_OUT1_P,
+--			ib => Si5345_OUT1_N,
+--			o => test_clk_1
+--		);
 
-ibuf_c_5: IBUFDS
-		port map(
-			i => Si5345_OUT5_P,
-			ib => Si5345_OUT5_N,
-			o => test_clk_2
-		);
+--ibuf_c_5: IBUFDS
+--		port map(
+--			i => Si5345_OUT5_P,
+--			ib => Si5345_OUT5_N,
+--			o => test_clk_2
+--		);
                  
-ibuf_c_6: IBUFDS
-		port map(
-			i => Si5345_OUT6_P,
-			ib => Si5345_OUT6_N,
-			o => test_clk_3
-		);
+--ibuf_c_6: IBUFDS
+--		port map(
+--			i => Si5345_OUT6_P,
+--			ib => Si5345_OUT6_N,
+--			o => test_clk_3
+--		);
 		
-ibuf_c_8: IBUFDS
-        port map(
-           i => Si5345_OUT8_P,
-           ib => Si5345_OUT8_N,
-           o => test_clk_4
-        );
+--ibuf_c_8: IBUFDS
+--        port map(
+--           i => Si5345_OUT8_P,
+--           ib => Si5345_OUT8_N,
+--           o => test_clk_4
+--        );
 
 ibuf_orbit: IBUFDS
 		port map(

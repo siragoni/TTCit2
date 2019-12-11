@@ -15,13 +15,13 @@ proc false_path {patt clk} {
 }
 
 # Ethernet RefClk (156.25 MHz)
-create_clock -period 6.4 -name eth_refclk [get_ports SI5345_I_OUT0_P]
+create_clock -period 6.4 -name eth_refclk [get_ports SI5345_I_OUT8_P]
 
 # System clock (125 MHz)
-create_clock -period 8 -name sysclk [get_ports SI5345_I_OUT1_P]
+create_clock -period 8 -name sysclk [get_ports SI5345_I_OUT9_P]
 
 # LHC clock from Si5345
-create_clock -period 25 -name lhc_clk_40 -waveform {0.000 12.500} [get_ports SI5345_OUT6_P]
+#create_clock -period 25 -name lhc_clk_40 -waveform {0.000 12.500} [get_ports SI5345_OUT6_P]
 
 # LHC clock 160 MHz from ADN2812 CDR from FMC TTC card
 create_clock -period 6.25 -name lhc_clk_160 -waveform {0.000 3.125} [get_ports FMC_HPC_CLK1_M2C_P]

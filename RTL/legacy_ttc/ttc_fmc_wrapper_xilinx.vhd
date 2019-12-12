@@ -39,7 +39,7 @@ dec: entity work.ttc_decoder
 --=====================================--
 port map 
 (
-  rst_i                  => not cdrbad,
+  rst_i                  => cdrbad,
   clk160_i               => cdrclk_in,  
   data_i                 => cdrdata_in, 
   info_o                 => info,  

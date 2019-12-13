@@ -112,6 +112,9 @@ architecture rtl of ipbus_slaves is
     signal tdg_status  : ipb_reg_v (2 downto 0);
     signal tdg_control : ipb_reg_v (0 downto 0);
     signal tdg_data_s  : std_logic_vector(127 downto 0);
+    --
+    signal inc_for_cnts : std_logic_vector(47 downto 0);
+    signal rst_ttcit_counters : std_logic;
    
     constant  active_s: boolean := true;  -- Comment: Enabled or disabled the  part of code 
     
@@ -147,7 +150,7 @@ stat_ctrl_regs: entity work.ipbus_ctrlreg_v
 		);
 
     stat(0) <= x"000000" & sn(7 downto 0); -- Board ID
-    stat(1) <= x"0d000200"; -- FW info: type[31:24] = xD->ttcit_logic, version[23:8] -> .., subversion[7:0] -> .. 
+    stat(1) <= x"0d000300"; -- FW info: type[31:24] = xD->ttcit_logic, version[23:8] -> .., subversion[7:0] -> .. 
     stat(2) <= x"0000000" & '0' & '0' & SI5345_INTR & SI5345_LOL ; -- STARUS reg
     stat(3) <= x"0000" & fpga_temperature;
     stat(4) <= x"0000" & fpga_vccaux;   
@@ -157,6 +160,7 @@ stat_ctrl_regs: entity work.ipbus_ctrlreg_v
 	
 	soft_rst <= ctrl(0)(0);
 	nuke <= ctrl(0)(1);
+	rst_ttcit_counters <= ctrl(0)(4);
 	scope_a <= ctrl(1);
 	scope_b <= ctrl(2);
 	FMC_SFP_SEL <= ctrl(3);
@@ -414,6 +418,44 @@ tdg: entity work.ipbus_tdg_clkbc
             tdg_data_o   => open, -- 128 bits
 		    tdg_strobe_o => open
             );
+            
+--======================================
+--        Trigger counters
+--======================================
+
+inc_for_cnts(47) <= ttc_status_i.ready;
+inc_for_cnts(46) <= ttc_status_i.err_sng;
+inc_for_cnts(45) <= ttc_status_i.err_dbl;
+inc_for_cnts(44) <= ttc_status_i.err_comm;
+inc_for_cnts(43) <= ttc_status_i.div_nrst;
+
+inc_for_cnts(42) <= ttc_data_i.l1accept;   
+inc_for_cnts(41) <= ttc_data_i.brc_strobe; 
+inc_for_cnts(40 downto 39) <= ttc_data_i.brc_t2; -- 2 bits     
+inc_for_cnts(38 downto 35) <= ttc_data_i.brc_d4; -- 4 bits     
+inc_for_cnts(34) <= ttc_data_i.brc_e;      
+inc_for_cnts(33) <= ttc_data_i.brc_b;      
+inc_for_cnts(32) <= ttc_data_i.adr_strobe; 
+inc_for_cnts(31 downto 18) <= ttc_data_i.adr_a14;    
+inc_for_cnts(17) <= ttc_data_i.adr_e;      
+inc_for_cnts(16 downto 9) <= ttc_data_i.adr_s8;     
+inc_for_cnts(8 downto 1) <= ttc_data_i.adr_d8;     
+inc_for_cnts(0) <= ttc_data_i.clk40_gated;
+    
+ttcit_counters: entity work.ipbus_ctrs_v
+	generic map(N_CTRS => 48, CTR_WDS => 1, LIMIT => FALSE)
+	port map(
+		ipb_clk  => ipb_clk, 
+        ipb_rst  => ipb_rst,
+        ipb_in   => ipbw(N_SLV_CNTS),
+        ipb_out  => ipbr(N_SLV_CNTS),
+		clk      => clk_bc,
+		rst      => rst_ttcit_counters,
+		inc      => inc_for_cnts,
+		dec      => (others => '0'), -- decrement not used
+		q        => open -- out std_logic_vector(N_CTRS * CTR_WDS * 32 - 1 downto 0)
+	);
+            
   -- =====================================================================
   -- == Slave 11  -- Comment: Second version  Xilinx Example           ==
   -- =====================================================================        

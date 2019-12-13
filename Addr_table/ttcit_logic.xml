@@ -98,4 +98,7 @@
     <node id="Outgoing"  address="0x100" mode="block" size="0x80" description="128word RAM" /> <!-- input command[7:0], address[23:0], data[31:0} -->
     <node id="Incoming"  address="0x180" mode="block" size="0x80" description="128word RAM" /> <!-- rubbish [31:0] + data [31:0] -->
   </node>
+  <node id="cnts" address="0x2600" description="Counters for outgoing signals" fwinfo="endpoint;width=6">
+    <node id="TTCitcnts" address="0x0" mode="block" size="0x40" description="48 TTCit counters" />
+  </node>
 </node>

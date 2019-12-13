@@ -425,6 +425,30 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+      <File Path="$PPRDIR/../../ipbus-firmware/components/ipbus_slaves/firmware/hdl/syncreg_w.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../../ipbus-firmware/components/ipbus_slaves/firmware/hdl/syncreg_r.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../../ipbus-firmware/components/ipbus_slaves/firmware/hdl/ipbus_syncreg_v.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../../ipbus-firmware/components/ipbus_slaves/firmware/hdl/ipbus_ctrs_v.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="$PPRDIR/../RTL/IPbus/ipbus_decode_ttcit_logic.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -516,24 +540,6 @@
         </FileInfo>
       </File>
       <File Path="$PPRDIR/../../ipbus-firmware/components/opencores_spi/firmware/hdl/ipbus_spi.vhd">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PPRDIR/../../ipbus-firmware/components/ipbus_slaves/firmware/hdl/syncreg_w.vhd">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PPRDIR/../../ipbus-firmware/components/ipbus_slaves/firmware/hdl/syncreg_r.vhd">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PPRDIR/../../ipbus-firmware/components/ipbus_slaves/firmware/hdl/ipbus_syncreg_v.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>

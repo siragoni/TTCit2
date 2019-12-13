@@ -45,3 +45,7 @@ set_property IOSTANDARD LVCMOS18 [get_ports FMC_HPC_LA08_N]
 #-- User LED on FMC TTC card
 set_property PACKAGE_PIN K13     [get_ports FMC_HPC_LA05_N]
 set_property IOSTANDARD LVCMOS18 [get_ports FMC_HPC_LA05_N]
+
+#-- enable for 160 MHz clock
+set_property PACKAGE_PIN G9      [get_ports FMC_HPC_LA01_CC_P]
+set_property IOSTANDARD LVCMOS18 [get_ports FMC_HPC_LA01_CC_P]

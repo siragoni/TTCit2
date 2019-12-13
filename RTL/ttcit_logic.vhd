@@ -124,6 +124,7 @@ entity ttcit_logic is
         FMC_HPC_LA09_P         : inout std_logic;
         FMC_HPC_LA09_N         : inout std_logic;
         FMC_HPC_LA10_P         : out std_logic;
+        FMC_HPC_LA01_CC_P      : out std_logic;
 --===============================================
 --  LEDs  Front Pannel 
 --================================================
@@ -627,9 +628,9 @@ port map (
    ttc_clk_gated => open          -- out, gated 40MHz clock, for comparison only
 );
 
-
+FMC_HPC_LA01_CC_P <= '1';               -- enable for 160 MHz clock
 FMC_HPC_LA10_P <= FMC_HPC_LA10_P_s;
-FMC_HPC_LA05_N <= not FMC_HPC_LA05_N_s; -- LED on in 0 because there is inverted on FMC TTC card
+FMC_HPC_LA05_N <= not FMC_HPC_LA05_N_s; -- LED on in '0' because there is inverted on FMC TTC card
 
 --======================================================
 -- ALL outputs with test clock

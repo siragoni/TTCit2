@@ -17,7 +17,7 @@ package ipbus_decode_ttcit_logic is
   subtype ipbus_sel_t is std_logic_vector(IPBUS_SEL_WIDTH - 1 downto 0);
   function ipbus_sel_ttcit_logic(addr : in std_logic_vector(31 downto 0)) return ipbus_sel_t;
 
--- START automatically  generated VHDL the Tue Dec 10 11:08:31 2019 
+-- START automatically  generated VHDL the Fri Dec 13 13:11:16 2019 
   constant N_SLV_CTRL: integer := 0;
   constant N_SLV_ICAP: integer := 1;
   constant N_SLV_RAM: integer := 2;
@@ -45,7 +45,7 @@ package body ipbus_decode_ttcit_logic is
     variable sel: ipbus_sel_t;
   begin
 
--- START automatically  generated VHDL the Tue Dec 10 11:08:31 2019 
+-- START automatically  generated VHDL the Fri Dec 13 13:11:16 2019 
     if    std_match(addr, "------------------00-000-000----") then
       sel := ipbus_sel_t(to_unsigned(N_SLV_CTRL, IPBUS_SEL_WIDTH)); -- ctrl / base 0x00000000 / mask 0x00003770
     elsif std_match(addr, "------------------00-001-0000---") then

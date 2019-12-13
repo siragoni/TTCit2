@@ -1,10 +1,14 @@
 <node id="TOP">
-  <node id="ctrl" address="0x0" description="stat regs" fwinfo="endpoint;width=4" >
+  <node id="ctrl" address="0x0" description="stat ctrl regs" fwinfo="endpoint;width=4" >
     <node id="boardid" address="0x0" permission="r" description="7-0: xx in MAC:08-00-30-00-2A-xx" />
     <node id="fwinfo" address="0x1" permission="r" description="31-24:type 23-8:version 7-0:subversion" />
-    <node id="status" address="0x2" permission="r" />
-    <node id="stat_spare1" address="0x3" permission="r" />
-    <node id="ctrl" address="0x8" />
+    <node id="status" address="0x2" permission="r" description="1:SI5345_INTR 0:SI5345_LOL" />
+    <node id="fpga_temperature" address="0x3" permission="r" description="bits 15..0" />
+	<node id="fpga_vccaux" address="0x4" permission="r" description="bits 15..0" />
+	<node id="fpga_vccint" address="0x5" permission="r" description="bits 15..0" />
+	<node id="fpga_vccbram" address="0x6" permission="r" description="bits 15..0" />
+	<node id="fpga_alarms" address="0x7" permission="r" description="bits 15..0" />
+    <node id="ctrl" address="0x8" description="1:soft ipbus reset,0:ipbus reset" />
     <node id="scopea" address="0x9" />
     <node id="scopeb" address="0xa" />
     <node id="fmcsfpsel" address="0xb" />

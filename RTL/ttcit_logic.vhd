@@ -340,7 +340,7 @@ end entity ttcit_logic;
 -- ==========================================
 -- ==   IPbus                             == 
 -- ==========================================
-	signal ipb_clk, rst_ipb, nuke, soft_rst, userled: std_logic;
+	signal ipb_clk, ipb_rst, nuke, soft_rst, userled: std_logic;
 	signal mac_addr: std_logic_vector(47 downto 0);
 	signal ip_addr: std_logic_vector(31 downto 0);
 	signal ipb_out: ipb_wbus;
@@ -403,18 +403,16 @@ end entity ttcit_logic;
 --========================================================  
 -- System monitor
 --========================================================
-    signal user_temp_alarm_out    : std_logic := '0'; 
-    signal vccint_alarm_out       : std_logic := '0'; 
-    signal vccaux_alarm_out       : std_logic := '0'; 
-    signal user_supply0_alarm_out : std_logic := '0'; 
-    signal user_supply1_alarm_out : std_logic := '0';
-    signal channel_out            : std_logic_vector (5 downto 0):=(others => '0');
-    signal ot_out                 : std_logic := '0'; 
-    signal eoc_out                : std_logic := '0'; 
-    signal vbram_alarm_out        : std_logic := '0'; 
-    signal alarm_out              : std_logic := '0'; 
-    signal eos_out                : std_logic := '0'; 
-    signal system_monitor_busy_out  : std_logic := '0';
+    signal channel_out          : std_logic_vector (5 downto 0):=(others => '0');
+    signal ot_out               : std_logic := '0'; 
+    signal eoc_out              : std_logic := '0'; 
+    signal eos_out              : std_logic := '0';
+    signal fpga_temperature     : std_logic_vector (15 downto 0):=(others => '0');
+    signal fpga_vccaux          : std_logic_vector (15 downto 0):=(others => '0'); 
+    signal fpga_vccint          : std_logic_vector (15 downto 0):=(others => '0');
+    signal fpga_vccbram         : std_logic_vector (15 downto 0):=(others => '0');
+    signal fpga_alarms          : std_logic_vector (15 downto 0):=(others => '0');
+--========================================================
     
     signal bbert_signal_out_sel, bbert_signal_in_sel: std_logic_vector(7 downto 0);
     signal bbert_clk_out, bbert_signal_out, bbert_clk_in, bbert_signal_in: std_logic := '0';
@@ -449,29 +447,7 @@ signal FMC_HPC_LA05_N_s : std_logic;
 signal ttc_data         : ttc_info_type;
 signal ttc_status       : ttc_stat_type;
         
-COMPONENT system_management_wiz_0
-      PORT (
-        dclk_in : IN STD_LOGIC;
-        reset_in : IN STD_LOGIC;
-        vp : IN STD_LOGIC;
-        vn : IN STD_LOGIC;
-        user_temp_alarm_out : OUT STD_LOGIC;
-        vccint_alarm_out : OUT STD_LOGIC;
-        vccaux_alarm_out : OUT STD_LOGIC;
-        user_supply0_alarm_out : OUT STD_LOGIC;
-        user_supply1_alarm_out : OUT STD_LOGIC;
-        ot_out : OUT STD_LOGIC;
-        channel_out : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
-        eoc_out : OUT STD_LOGIC;
-        vbram_alarm_out : OUT STD_LOGIC;
-        alarm_out : OUT STD_LOGIC;
-        eos_out : OUT STD_LOGIC;
-        busy_out : OUT STD_LOGIC;
-        i2c_sclk : inout STD_LOGIC;         
-        i2c_sda : inout STD_LOGIC 
-      );
-END COMPONENT;
-           
+       
 begin
 
 --==========================================
@@ -490,7 +466,7 @@ begin
             eth_rx_n  => SFP_RX_N,
             sfp_los   =>  '0', 
             ipb_clk_o => ipb_clk, 
-            rst_ipb_o => rst_ipb, 
+            rst_ipb_o => ipb_rst, 
             nuke      => nuke,
             soft_rst  => soft_rst,
             leds(0)   => LED_15, 
@@ -510,12 +486,17 @@ begin
 	ipb_slaves: entity work.ipbus_slaves
 		port map(
 			ipb_clk => ipb_clk,
-			ipb_rst => rst_ipb,
+			ipb_rst => ipb_rst,
 			ipb_in => ipb_out,
 			ipb_out => ipb_in,
 			nuke => nuke,
 			soft_rst => soft_rst,
 			userled => open,
+			fpga_temperature => fpga_temperature,
+            fpga_vccaux => fpga_vccaux,
+            fpga_vccint => fpga_vccint,
+            fpga_vccbram => fpga_vccbram,
+            fpga_alarms => fpga_alarms,
 			clk_bc => clk_bc,
             rst_bc => '0', --> I should generate reset pulse for 40 MHz domain 
 			i2c_scl => IIC_MUX_SCL_MAIN,
@@ -708,28 +689,35 @@ STARTUPE3_inst: STARTUPE3
 -- System monitor
 --=========================================================================================
 
-    system_monitor: system_management_wiz_0   -- Comment: Check this name 
-              port map (
-                        dclk_in                => ipb_clk,                 -- Clock input for the dynamic reconfiguration port
-                        reset_in               => rst_ipb,                 -- Reset signal for the System Monitor control logic
-                        vp                     => vp,                      -- input wire vp
-                        vn                     => vn,                      -- input wire vn
-                        user_temp_alarm_out    => user_temp_alarm_out,     -- output wire user_temp_alarm_out
-                        vccint_alarm_out       => vccint_alarm_out,        -- output wire vccint_alarm_out
-                        vccaux_alarm_out       => vccaux_alarm_out,        -- output wire vccaux_alarm_out
-                        user_supply0_alarm_out => user_supply0_alarm_out,  -- output wire user_supply0_alarm_out
-                        user_supply1_alarm_out => user_supply1_alarm_out,  -- output wire user_supply1_alarm_out
-                        ot_out                 => ot_out,                  -- output wire ot_out
-                        channel_out            => channel_out,             -- output wire [5 : 0] channel_out
-                        eoc_out                => eoc_out,                 -- output wire eoc_out
-                        vbram_alarm_out        => vbram_alarm_out,         -- output wire vbram_alarm_out
-                        alarm_out              => alarm_out,               -- output wire alarm_out
-                        eos_out                => eos_out,                 -- output wire eos_out
-                        busy_out               => system_monitor_busy_out, -- output wire busy_out
-                        i2c_sclk               => SYSMON_SCL_LS,         
-                        i2c_sda                => SYSMON_SDA_LS 
-                        );               
-
+sysmon: entity work.ug580
+port map (
+          -- inputs
+          DCLK                  => ipb_clk,       -- Clock input for the dynamic reconfiguration port  
+          RESET                 => ipb_rst,       -- Reset signal for the System Monitor control logic 
+          VP                    => '0', --VP,            -- input wire vp                                     
+          VN                    => '0', --VN,            -- input wire vn
+          VAUXP0                => '0', --VAUXP0,        -- input wire vauxp 
+          VAUXN0                => '0', --VAUXN0 ,       -- input wire vauxn
+          VAUXP8                => '0', --VAUXP8,        -- input wire vauxp 
+          VAUXN8                => '0', --VAUXN8 ,       -- input wire vauxn                       
+          I2C_SCLK              => SYSMON_SCL_LS,  
+          I2C_SDA               => SYSMON_SDA_LS,    
+          -- outputs                                                     
+          MEASURED_TEMP         => fpga_temperature,  -- out 15..0                                 
+          MEASURED_VCCAUX       => fpga_vccaux,   -- out 15..0                                 
+          MEASURED_VCCINT       => fpga_vccint,   -- out 15..0                   
+          MEASURED_VCCBRAM      => fpga_vccbram,  -- out 15..0                      
+          MEASURED_AUX0         => open,     -- out 15..0                      
+          MEASURED_AUX1         => open,     -- out 15..0                
+          MEASURED_AUX2         => open,          -- out 15..0      
+          MEASURED_AUX3         => open,          -- out 15..0         
+          ALM                   => fpga_alarms,   -- out 15..0                               
+          CHANNEL               => channel_out,   -- out 5..0 - not used                     
+          OT                    => ot_out,        -- out - not used                     
+          EOC                   => eoc_out,       -- out - not used      
+          EOS                   => eos_out        -- out - not used             
+         );
+                    
 -- ============================================================ 
 -- ==   Temporary assigned all inputs !!!                    == 
 -- ============================================================

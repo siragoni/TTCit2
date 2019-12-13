@@ -21,6 +21,11 @@ entity ipbus_slaves is
 		nuke: out std_logic;
 		soft_rst: out std_logic;
 		userled: out std_logic;
+		fpga_temperature : in std_logic_vector (15 downto 0);
+        fpga_vccaux : in std_logic_vector (15 downto 0);   
+        fpga_vccint : in std_logic_vector (15 downto 0);   
+        fpga_vccbram : in std_logic_vector (15 downto 0);
+        fpga_alarms : in std_logic_vector (15 downto 0);     
 		clk_bc: in std_logic;
         rst_bc: in std_logic;
 		i2c_scl: inout std_logic;
@@ -91,7 +96,7 @@ architecture rtl of ipbus_slaves is
 
 	signal ipbw: ipb_wbus_array(N_SLAVES - 1 downto 0);
 	signal ipbr: ipb_rbus_array(N_SLAVES - 1 downto 0);
-	signal stat: ipb_reg_v(3 downto 0);
+	signal stat: ipb_reg_v(7 downto 0);
 	signal ctrl: ipb_reg_v(6 downto 0);
 	signal scl_pad_0_o, sda_pad_0_o, scl_pad_0_i, sda_pad_0_i, scl_padoen_0_o, sda_padoen_0_o: std_logic;
 	signal scl_pad_1_o, sda_pad_1_o, scl_pad_1_i, sda_pad_1_i, scl_padoen_1_o, sda_padoen_1_o: std_logic;
@@ -131,7 +136,7 @@ begin
 -- Must be the same on all boards in Alice CTP IPbus structure
 
 stat_ctrl_regs: entity work.ipbus_ctrlreg_v
-        generic map(N_STAT => 4, N_CTRL => 7, SWAP_ORDER => true)
+        generic map(N_STAT => 8, N_CTRL => 7, SWAP_ORDER => true)
         port map(
 			clk => ipb_clk,
 			reset => ipb_rst,
@@ -142,9 +147,13 @@ stat_ctrl_regs: entity work.ipbus_ctrlreg_v
 		);
 
     stat(0) <= x"000000" & sn(7 downto 0); -- Board ID
-    stat(1) <= x"0d000106"; -- FW info: type[31:24] = xD->ttcit_logic, version[23:8] -> .., subversion[7:0] -> .. 
+    stat(1) <= x"0d000200"; -- FW info: type[31:24] = xD->ttcit_logic, version[23:8] -> .., subversion[7:0] -> .. 
     stat(2) <= x"0000000" & '0' & '0' & SI5345_INTR & SI5345_LOL ; -- STARUS reg
-    stat(3) <= x"00000000"; -- dummy reg
+    stat(3) <= x"0000" & fpga_temperature;
+    stat(4) <= x"0000" & fpga_vccaux;   
+    stat(5) <= x"0000" & fpga_vccint;   
+    stat(6) <= x"0000" & fpga_vccbram;  
+    stat(7) <= x"0000" & fpga_alarms;
 	
 	soft_rst <= ctrl(0)(0);
 	nuke <= ctrl(0)(1);

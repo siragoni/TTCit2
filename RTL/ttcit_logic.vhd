@@ -124,7 +124,7 @@ entity ttcit_logic is
         FMC_HPC_LA09_P         : inout std_logic;
         FMC_HPC_LA09_N         : inout std_logic;
         FMC_HPC_LA10_P         : out std_logic;
-        FMC_HPC_LA01_CC_P      : out std_logic;
+        FMC_HPC_LA01_CC_P      : out std_logic; -- enable for 160 MHz clock
 --===============================================
 --  LEDs  Front Pannel 
 --================================================

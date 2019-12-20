@@ -150,7 +150,7 @@ stat_ctrl_regs: entity work.ipbus_ctrlreg_v
 		);
 
     stat(0) <= x"000000" & sn(7 downto 0); -- Board ID
-    stat(1) <= x"0d000300"; -- FW info: type[31:24] = xD->ttcit_logic, version[23:8] -> .., subversion[7:0] -> .. 
+    stat(1) <= x"0d000301"; -- FW info: type[31:24] = xD->ttcit_logic, version[23:8] -> .., subversion[7:0] -> .. 
     stat(2) <= x"0000000" & '0' & '0' & SI5345_INTR & SI5345_LOL ; -- STARUS reg
     stat(3) <= x"0000" & fpga_temperature;
     stat(4) <= x"0000" & fpga_vccaux;   

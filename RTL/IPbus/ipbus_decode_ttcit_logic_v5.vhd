@@ -13,11 +13,11 @@ use ieee.numeric_std.all;
 
 package ipbus_decode_ttcit_logic is
 
-  constant IPBUS_SEL_WIDTH: positive := 5;
+  constant IPBUS_SEL_WIDTH: positive := 6;
   subtype ipbus_sel_t is std_logic_vector(IPBUS_SEL_WIDTH - 1 downto 0);
   function ipbus_sel_ttcit_logic(addr : in std_logic_vector(31 downto 0)) return ipbus_sel_t;
 
--- START automatically  generated VHDL the Fri Jan 24 14:49:50 2020 
+-- START automatically  generated VHDL the Mon Jan 13 15:44:27 2020 
   constant N_SLV_CTRL: integer := 0;
   constant N_SLV_ICAP: integer := 1;
   constant N_SLV_RAM: integer := 2;
@@ -34,14 +34,23 @@ package ipbus_decode_ttcit_logic is
   constant N_SLV_FLASH_SPI_RAM_0: integer := 13;
   constant N_SLV_FLASH_SPI_RAM_1: integer := 14;
   constant N_SLV_TTCITCNTS: integer := 15;
-  constant N_SLV_TTCITCNTS_CHANNELA_BCRST: integer := 16;
-  constant N_SLV_TTCIT_FINEDELAYR1: integer := 17;
-  constant N_SLV_TTCIT_FINEDELAYR2: integer := 18;
-  constant N_SLV_TTCIT_COARSEDELAY: integer := 19;
-  constant N_SLV_TTCIT_CONTROLREGISTER: integer := 20;
-  constant N_SLV_TTCIT_IDREGISTER1: integer := 21;
-  constant N_SLV_TTCIT_IDREGISTER2: integer := 22;
-  constant N_SLAVES: integer := 23;
+  constant N_SLV_TTCITCNTS_CHANNELA_ECRST: integer := 16;
+  constant N_SLV_TTCITCNTS_CHANNELA_BCRST: integer := 17;
+  constant N_SLV_TTCITCNTS_ERRORCNT0: integer := 18;
+  constant N_SLV_TTCITCNTS_ERRORCNT1: integer := 19;
+  constant N_SLV_TTCITCNTS_ERRORCNT2: integer := 20;
+  constant N_SLV_TTCITCNTS_ERRORCNT3: integer := 21;
+  constant N_SLV_TTCIT_FINEDELAYR1: integer := 22;
+  constant N_SLV_TTCIT_FINEDELAYR2: integer := 23;
+  constant N_SLV_TTCIT_COARSEDELAY: integer := 24;
+  constant N_SLV_TTCIT_CONTROLREGISTER: integer := 25;
+  constant N_SLV_TTCIT_IDREGISTER1: integer := 26;
+  constant N_SLV_TTCIT_IDREGISTER2: integer := 27;
+  constant N_SLV_TTCIT_HBCNT: integer := 28;
+  constant N_SLV_TTCIT_HBRESCNT: integer := 29;
+  constant N_SLV_TTCIT_TFCNT: integer := 30;
+  constant N_SLV_TTCIT_PPCNT: integer := 31;
+  constant N_SLAVES: integer := 32;
 -- END automatically generated VHDL
 
     
@@ -53,7 +62,7 @@ package body ipbus_decode_ttcit_logic is
     variable sel: ipbus_sel_t;
   begin
 
--- START automatically  generated VHDL the Fri Jan 24 14:49:50 2020 
+-- START automatically  generated VHDL the Mon Jan 13 15:44:27 2020 
     if    std_match(addr, "-----------------0000000-000----") then
       sel := ipbus_sel_t(to_unsigned(N_SLV_CTRL, IPBUS_SEL_WIDTH)); -- ctrl / base 0x00000000 / mask 0x00007f70
     elsif std_match(addr, "-----------------0000001-0000---") then
@@ -86,8 +95,18 @@ package body ipbus_decode_ttcit_logic is
       sel := ipbus_sel_t(to_unsigned(N_SLV_FLASH_SPI_RAM_1, IPBUS_SEL_WIDTH)); -- FLASH_SPI_Ram_1 / base 0x00002400 / mask 0x00007e00
     elsif std_match(addr, "-----------------0100110-0------") then
       sel := ipbus_sel_t(to_unsigned(N_SLV_TTCITCNTS, IPBUS_SEL_WIDTH)); -- ttcitcnts / base 0x00002600 / mask 0x00007f40
+    elsif std_match(addr, "-----------------0101000-0------") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCITCNTS_CHANNELA_ECRST, IPBUS_SEL_WIDTH)); -- ttcitcnts_channelA_ECRST / base 0x00002800 / mask 0x00007f40
+    elsif std_match(addr, "-----------------0110000-0------") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCITCNTS_CHANNELA_BCRST, IPBUS_SEL_WIDTH)); -- ttcitcnts_channelA_BCRST / base 0x00003000 / mask 0x00007f40
+    elsif std_match(addr, "-----------------0110010-0------") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCITCNTS_ERRORCNT0, IPBUS_SEL_WIDTH)); -- ttcitcnts_errorCnt0 / base 0x00003200 / mask 0x00007f40
+    elsif std_match(addr, "-----------------0110011-0------") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCITCNTS_ERRORCNT1, IPBUS_SEL_WIDTH)); -- ttcitcnts_errorCnt1 / base 0x00003300 / mask 0x00007f40
     elsif std_match(addr, "-----------------0110100-0------") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCITCNTS_CHANNELA_BCRST, IPBUS_SEL_WIDTH)); -- ttcitcnts_channelA_BCRST / base 0x00003400 / mask 0x00007f40
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCITCNTS_ERRORCNT2, IPBUS_SEL_WIDTH)); -- ttcitcnts_errorCnt2 / base 0x00003400 / mask 0x00007f40
+    elsif std_match(addr, "-----------------0110101-0------") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCITCNTS_ERRORCNT3, IPBUS_SEL_WIDTH)); -- ttcitcnts_errorCnt3 / base 0x00003500 / mask 0x00007f40
     elsif std_match(addr, "-----------------0110110-0------") then
       sel := ipbus_sel_t(to_unsigned(N_SLV_TTCIT_FINEDELAYR1, IPBUS_SEL_WIDTH)); -- ttcit_FineDelayR1 / base 0x00003600 / mask 0x00007f40
     elsif std_match(addr, "-----------------0110111-0------") then
@@ -100,6 +119,14 @@ package body ipbus_decode_ttcit_logic is
       sel := ipbus_sel_t(to_unsigned(N_SLV_TTCIT_IDREGISTER1, IPBUS_SEL_WIDTH)); -- ttcit_IdRegister1 / base 0x00004000 / mask 0x00007f40
     elsif std_match(addr, "-----------------1000001-0------") then
       sel := ipbus_sel_t(to_unsigned(N_SLV_TTCIT_IDREGISTER2, IPBUS_SEL_WIDTH)); -- ttcit_IdRegister2 / base 0x00004100 / mask 0x00007f40
+    elsif std_match(addr, "-----------------1000010-0------") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCIT_HBCNT, IPBUS_SEL_WIDTH)); -- ttcit_HBcnt / base 0x00004200 / mask 0x00007f40
+    elsif std_match(addr, "-----------------1000011-0------") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCIT_HBRESCNT, IPBUS_SEL_WIDTH)); -- ttcit_HBRescnt / base 0x00004300 / mask 0x00007f40
+    elsif std_match(addr, "-----------------1000100-0------") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCIT_TFCNT, IPBUS_SEL_WIDTH)); -- ttcit_TFcnt / base 0x00004400 / mask 0x00007f40
+    elsif std_match(addr, "-----------------1000101-0------") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCIT_PPCNT, IPBUS_SEL_WIDTH)); -- ttcit_PPcnt / base 0x00004500 / mask 0x00007f40
 -- END automatically generated VHDL
 
     else

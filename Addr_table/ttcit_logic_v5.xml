@@ -99,10 +99,25 @@
     <node id="Incoming"  address="0x180" mode="block" size="0x80" description="128word RAM" /> <!-- rubbish [31:0] + data [31:0] -->
   </node>
   <node id="ttcitcnts" address="0x2600" description="Counters for outgoing signals" fwinfo="endpoint;width=6">
-    <node id="TTCitcnts" address="0x0" mode="block" size="0x160" description="300 TTCit counters" />
+    <node id="TTCitcnts" address="0x0" mode="block" size="0x40" description="48 TTCit counters" />
   </node>
-  <node id="ttcitcnts_channelA_BCRST" address="0x3400" description="Counters for channel A in BCRST" fwinfo="endpoint;width=6">
+  <node id="ttcitcnts_channelA_ECRST" address="0x2800" description="Counters for channel A in ECRST" fwinfo="endpoint;width=6">
+    <node id="TTCitcnts_channelA_ECRST" address="0x0" mode="block" size="0x10" description="16 TTCit counters in ECRST" />
+  </node>
+  <node id="ttcitcnts_channelA_BCRST" address="0x3000" description="Counters for channel A in BCRST" fwinfo="endpoint;width=6">
     <node id="TTCitcnts_channelA_BCRST" address="0x0" mode="block" size="0x10" description="16 TTCit counters in BCRST" />
+  </node>
+  <node id="ttcitcnts_errorCnt0" address="0x3200" description="Counter for transmission error SBEL" fwinfo="endpoint;width=6">
+    <node id="TTCitcnts_errorCnt0" address="0x0" mode="block" size="0x1" description="TTCit counters for Error SBEL" />
+  </node>
+  <node id="ttcitcnts_errorCnt1" address="0x3300" description="Counter for transmission error SBEL" fwinfo="endpoint;width=6">
+    <node id="TTCitcnts_errorCnt1" address="0x0" mode="block" size="0x1" description="TTCit counters for Error SBEL" />
+  </node>
+  <node id="ttcitcnts_errorCnt2" address="0x3400" description="Counter for transmission error SBEL" fwinfo="endpoint;width=6">
+    <node id="TTCitcnts_errorCnt2" address="0x0" mode="block" size="0x1" description="TTCit counters for Error SBEL" />
+  </node>
+  <node id="ttcitcnts_errorCnt3" address="0x3500" description="Counter for transmission error SBEL" fwinfo="endpoint;width=6">
+    <node id="TTCitcnts_errorCnt3" address="0x0" mode="block" size="0x1" description="TTCit counters for Error SBEL" />
   </node>
   <node id="ttcit_FineDelayR1" address="0x3600" description="Register for long messages FDR1" fwinfo="endpoint;width=6">
     <node id="TTCit_FineDelayR1" address="0x0" mode="block" size="0x1" description="Register for long messages FDR1" />
@@ -121,5 +136,17 @@
   </node>
   <node id="ttcit_IdRegister2" address="0x4100" description="Register for long messages ID2" fwinfo="endpoint;width=6">
     <node id="TTCit_IdRegister2" address="0x0" mode="block" size="0x1" description="Register for long messages ID2" />
+  </node>
+  <node id="ttcit_HBcnt" address="0x4200" description="Counter for HB" fwinfo="endpoint;width=6">
+    <node id="ttcit_HBcnt" address="0x0" mode="block" size="0x1" description="Counter for HB" />
+  </node>
+  <node id="ttcit_HBRescnt" address="0x4300" description="Counter for HBReset" fwinfo="endpoint;width=6">
+    <node id="ttcit_HBRescnt" address="0x0" mode="block" size="0x1" description="Counter for HBReset" />
+  </node>
+  <node id="ttcit_TFcnt" address="0x4400" description="Counter for TF" fwinfo="endpoint;width=6">
+    <node id="ttcit_TFcnt" address="0x0" mode="block" size="0x1" description="Counter for TF" />
+  </node>
+  <node id="ttcit_PPcnt" address="0x4500" description="Counter for PP" fwinfo="endpoint;width=6">
+    <node id="ttcit_PPcnt" address="0x0" mode="block" size="0x1" description="Counter for PP" />
   </node>
 </node>

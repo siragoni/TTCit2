@@ -19,7 +19,7 @@
   </node>
   <node id="icap" address="0x100" description="N_SLV_ICAP" fwinfo="endpoint;width=1">
     <node id="iprog_icap" address="0x0"  description="data" permission="w" />
-    <node id="icap_status" address="0x1" description="status" permission="r" />
+    <node id="icap_status" address="0x1" description="avail[31],prdone[30],prerror[29]" permission="r" />
   </node>
   <node id="ram" address="0x1000" mode="block" size="0x400" description="1kword RAM" fwinfo="endpoint;width=10"/>
   <node id="reg" address="0x1400" description="read-write register" fwinfo="endpoint;width=0"/>

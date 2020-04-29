@@ -33,7 +33,7 @@ create_clock -period 6.25 -name lhc_clk_160 -waveform {0.000 3.125} [get_ports F
 #set_false_path -from [get_clocks clk_pll_i] -to [get_clocks clk_out_40_bc_clock]
 #set_false_path -from [get_clocks clk_out_40_bc_clock] -to [get_clocks clk_pll_i]
 
-set_clock_groups -asynchronous -group [get_clocks -include_generated_clocks sysclk] \
+set_clock_groups -asynchronous -group [get_clocks -include_generated_clocks I] \ 
 -group [get_clocks -include_generated_clocks [get_clocks -filter {name =~ txoutclk*}]] \
 -group [get_clocks -include_generated_clocks [get_clocks -filter {name =~ ddr4_0_inst0_c0_sys_clk_p}]] \
 -group [get_clocks -include_generated_clocks [get_clocks -filter {name =~ ddr4_1_inst0_c0_sys_clk_p}]] \

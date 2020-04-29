@@ -19,7 +19,7 @@
   </node>
   <node id="icap" address="0x100" description="N_SLV_ICAP" fwinfo="endpoint;width=1">
     <node id="iprog_icap" address="0x0"  description="data" permission="w" />
-    <node id="icap_status" address="0x1" description="status" permission="r" />
+    <node id="icap_status" address="0x1" description="avail[31],prdone[30],prerror[29]" permission="r" />
   </node>
   <node id="ram" address="0x1000" mode="block" size="0x400" description="1kword RAM" fwinfo="endpoint;width=10"/>
   <node id="reg" address="0x1400" description="read-write register" fwinfo="endpoint;width=0"/>
@@ -98,7 +98,7 @@
     <node id="Outgoing"  address="0x100" mode="block" size="0x80" description="128word RAM" /> <!-- input command[7:0], address[23:0], data[31:0} -->
     <node id="Incoming"  address="0x180" mode="block" size="0x80" description="128word RAM" /> <!-- rubbish [31:0] + data [31:0] -->
   </node>
-  <node id="ttcitcnts" address="0x2600" description="Counters for outgoing signals" fwinfo="endpoint;width=6">
+  <node id="ttcitcnts" address="0x2600" description="Counters for outgoing signals" fwinfo="endpoint;width=9">
     <node id="TTCitcnts" address="0x0" mode="block" size="0x160" description="300 TTCit counters" />
   </node>
   <node id="ttcitcnts_channelA_BCRST" address="0x3400" description="Counters for channel A in BCRST" fwinfo="endpoint;width=6">

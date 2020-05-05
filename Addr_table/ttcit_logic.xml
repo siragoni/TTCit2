@@ -98,28 +98,10 @@
     <node id="Outgoing"  address="0x100" mode="block" size="0x80" description="128word RAM" /> <!-- input command[7:0], address[23:0], data[31:0} -->
     <node id="Incoming"  address="0x180" mode="block" size="0x80" description="128word RAM" /> <!-- rubbish [31:0] + data [31:0] -->
   </node>
-  <node id="ttcitcnts" address="0x2600" description="Counters for outgoing signals" fwinfo="endpoint;width=9">
-    <node id="TTCitcnts" address="0x0" mode="block" size="0x160" description="300 TTCit counters" />
+  <node id="ttcitcnts" address="0x2600" description="Counters for outgoing signals" fwinfo="endpoint;width=8">
+    <node id="TTCitcnts" address="0x0" mode="block" size="0x100" description="135 TTCit counters, max. is 256" />
   </node>
-  <node id="ttcitcnts_channelA_BCRST" address="0x3400" description="Counters for channel A in BCRST" fwinfo="endpoint;width=6">
+  <node id="ttcitcnts_channelA_BCRST" address="0x2700" description="Counters for channel A in BCRST" fwinfo="endpoint;width=4">
     <node id="TTCitcnts_channelA_BCRST" address="0x0" mode="block" size="0x10" description="16 TTCit counters in BCRST" />
-  </node>
-  <node id="ttcit_FineDelayR1" address="0x3600" description="Register for long messages FDR1" fwinfo="endpoint;width=6">
-    <node id="TTCit_FineDelayR1" address="0x0" mode="block" size="0x1" description="Register for long messages FDR1" />
-  </node>
-  <node id="ttcit_FineDelayR2" address="0x3700" description="Register for long messages FDR2" fwinfo="endpoint;width=6">
-    <node id="TTCit_FineDelayR2" address="0x0" mode="block" size="0x1" description="Register for long messages FDR1" />
-  </node>
-  <node id="ttcit_CoarseDelay" address="0x3800" description="Register for long messages Coarse Delay" fwinfo="endpoint;width=6">
-    <node id="TTCit_CoarseDelay" address="0x0" mode="block" size="0x1" description="Register for long messages Coarse Delay" />
-  </node>
-  <node id="ttcit_ControlRegister" address="0x3900" description="Register for long messages Control Register" fwinfo="endpoint;width=6">
-    <node id="TTCit_ControlRegister" address="0x0" mode="block" size="0x1" description="Register for long messages Control Register" />
-  </node>
-  <node id="ttcit_IdRegister1" address="0x4000" description="Register for long messages ID1" fwinfo="endpoint;width=6">
-    <node id="TTCit_IdRegister1" address="0x0" mode="block" size="0x1" description="Register for long messages ID1" />
-  </node>
-  <node id="ttcit_IdRegister2" address="0x4100" description="Register for long messages ID2" fwinfo="endpoint;width=6">
-    <node id="TTCit_IdRegister2" address="0x0" mode="block" size="0x1" description="Register for long messages ID2" />
   </node>
 </node>

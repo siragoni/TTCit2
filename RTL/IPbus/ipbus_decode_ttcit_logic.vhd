@@ -17,7 +17,7 @@ package ipbus_decode_ttcit_logic is
   subtype ipbus_sel_t is std_logic_vector(IPBUS_SEL_WIDTH - 1 downto 0);
   function ipbus_sel_ttcit_logic(addr : in std_logic_vector(31 downto 0)) return ipbus_sel_t;
 
--- START automatically  generated VHDL the Fri Jan 24 14:49:50 2020 
+-- START automatically  generated VHDL the Tue May  5 14:21:39 2020 
   constant N_SLV_CTRL: integer := 0;
   constant N_SLV_ICAP: integer := 1;
   constant N_SLV_RAM: integer := 2;
@@ -35,13 +35,7 @@ package ipbus_decode_ttcit_logic is
   constant N_SLV_FLASH_SPI_RAM_1: integer := 14;
   constant N_SLV_TTCITCNTS: integer := 15;
   constant N_SLV_TTCITCNTS_CHANNELA_BCRST: integer := 16;
-  constant N_SLV_TTCIT_FINEDELAYR1: integer := 17;
-  constant N_SLV_TTCIT_FINEDELAYR2: integer := 18;
-  constant N_SLV_TTCIT_COARSEDELAY: integer := 19;
-  constant N_SLV_TTCIT_CONTROLREGISTER: integer := 20;
-  constant N_SLV_TTCIT_IDREGISTER1: integer := 21;
-  constant N_SLV_TTCIT_IDREGISTER2: integer := 22;
-  constant N_SLAVES: integer := 23;
+  constant N_SLAVES: integer := 17;
 -- END automatically generated VHDL
 
     
@@ -53,53 +47,41 @@ package body ipbus_decode_ttcit_logic is
     variable sel: ipbus_sel_t;
   begin
 
--- START automatically  generated VHDL the Fri Jan 24 14:49:50 2020 
-    if    std_match(addr, "-----------------0000000-000----") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_CTRL, IPBUS_SEL_WIDTH)); -- ctrl / base 0x00000000 / mask 0x00007f70
-    elsif std_match(addr, "-----------------0000001-0000---") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_ICAP, IPBUS_SEL_WIDTH)); -- icap / base 0x00000100 / mask 0x00007f78
-    elsif std_match(addr, "-----------------00100----------") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_RAM, IPBUS_SEL_WIDTH)); -- ram / base 0x00001000 / mask 0x00007c00
-    elsif std_match(addr, "-----------------0010100-0000---") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_REG, IPBUS_SEL_WIDTH)); -- reg / base 0x00001400 / mask 0x00007f78
-    elsif std_match(addr, "-----------------0100000-0000---") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_PRAM, IPBUS_SEL_WIDTH)); -- pram / base 0x00002000 / mask 0x00007f78
-    elsif std_match(addr, "-----------------0100000-0001---") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_I2CMAIN, IPBUS_SEL_WIDTH)); -- i2cmain / base 0x00002008 / mask 0x00007f78
-    elsif std_match(addr, "-----------------0100000-0100---") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_BBERT, IPBUS_SEL_WIDTH)); -- bbert / base 0x00002020 / mask 0x00007f78
-    elsif std_match(addr, "-----------------0100000-0101---") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_SPIADC, IPBUS_SEL_WIDTH)); -- spiadc / base 0x00002028 / mask 0x00007f78
-    elsif std_match(addr, "-----------------0100000-0110---") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_I2CPLL, IPBUS_SEL_WIDTH)); -- i2cpll / base 0x00002030 / mask 0x00007f78
-    elsif std_match(addr, "-----------------0100000-100----") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_SSM, IPBUS_SEL_WIDTH)); -- ssm / base 0x00002040 / mask 0x00007f70
-    elsif std_match(addr, "-----------------0100000-1010---") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_SSMCTRL, IPBUS_SEL_WIDTH)); -- ssmctrl / base 0x00002050 / mask 0x00007f78
-    elsif std_match(addr, "-----------------0100000-110----") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_TDG, IPBUS_SEL_WIDTH)); -- tdg / base 0x00002060 / mask 0x00007f70
-    elsif std_match(addr, "-----------------0100000-1110---") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_TDGCTRL, IPBUS_SEL_WIDTH)); -- tdgctrl / base 0x00002070 / mask 0x00007f78
-    elsif std_match(addr, "-----------------010001---------") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_FLASH_SPI_RAM_0, IPBUS_SEL_WIDTH)); -- FLASH_SPI_Ram_0 / base 0x00002200 / mask 0x00007e00
-    elsif std_match(addr, "-----------------010010---------") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_FLASH_SPI_RAM_1, IPBUS_SEL_WIDTH)); -- FLASH_SPI_Ram_1 / base 0x00002400 / mask 0x00007e00
-    elsif std_match(addr, "-----------------0100110-0------") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCITCNTS, IPBUS_SEL_WIDTH)); -- ttcitcnts / base 0x00002600 / mask 0x00007f40
-    elsif std_match(addr, "-----------------0110100-0------") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCITCNTS_CHANNELA_BCRST, IPBUS_SEL_WIDTH)); -- ttcitcnts_channelA_BCRST / base 0x00003400 / mask 0x00007f40
-    elsif std_match(addr, "-----------------0110110-0------") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCIT_FINEDELAYR1, IPBUS_SEL_WIDTH)); -- ttcit_FineDelayR1 / base 0x00003600 / mask 0x00007f40
-    elsif std_match(addr, "-----------------0110111-0------") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCIT_FINEDELAYR2, IPBUS_SEL_WIDTH)); -- ttcit_FineDelayR2 / base 0x00003700 / mask 0x00007f40
-    elsif std_match(addr, "-----------------0111000-0------") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCIT_COARSEDELAY, IPBUS_SEL_WIDTH)); -- ttcit_CoarseDelay / base 0x00003800 / mask 0x00007f40
-    elsif std_match(addr, "-----------------0111001-0------") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCIT_CONTROLREGISTER, IPBUS_SEL_WIDTH)); -- ttcit_ControlRegister / base 0x00003900 / mask 0x00007f40
-    elsif std_match(addr, "-----------------1000000-0------") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCIT_IDREGISTER1, IPBUS_SEL_WIDTH)); -- ttcit_IdRegister1 / base 0x00004000 / mask 0x00007f40
-    elsif std_match(addr, "-----------------1000001-0------") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCIT_IDREGISTER2, IPBUS_SEL_WIDTH)); -- ttcit_IdRegister2 / base 0x00004100 / mask 0x00007f40
+-- START automatically  generated VHDL the Tue May  5 14:21:39 2020 
+    if    std_match(addr, "------------------00-000-000----") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_CTRL, IPBUS_SEL_WIDTH)); -- ctrl / base 0x00000000 / mask 0x00003770
+    elsif std_match(addr, "------------------00-001-0000---") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_ICAP, IPBUS_SEL_WIDTH)); -- icap / base 0x00000100 / mask 0x00003778
+    elsif std_match(addr, "------------------01-0----------") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_RAM, IPBUS_SEL_WIDTH)); -- ram / base 0x00001000 / mask 0x00003400
+    elsif std_match(addr, "------------------01-100-0000---") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_REG, IPBUS_SEL_WIDTH)); -- reg / base 0x00001400 / mask 0x00003778
+    elsif std_match(addr, "------------------10-000-0000---") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_PRAM, IPBUS_SEL_WIDTH)); -- pram / base 0x00002000 / mask 0x00003778
+    elsif std_match(addr, "------------------10-000-0001---") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_I2CMAIN, IPBUS_SEL_WIDTH)); -- i2cmain / base 0x00002008 / mask 0x00003778
+    elsif std_match(addr, "------------------10-000-0100---") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_BBERT, IPBUS_SEL_WIDTH)); -- bbert / base 0x00002020 / mask 0x00003778
+    elsif std_match(addr, "------------------10-000-0101---") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_SPIADC, IPBUS_SEL_WIDTH)); -- spiadc / base 0x00002028 / mask 0x00003778
+    elsif std_match(addr, "------------------10-000-0110---") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_I2CPLL, IPBUS_SEL_WIDTH)); -- i2cpll / base 0x00002030 / mask 0x00003778
+    elsif std_match(addr, "------------------10-000-100----") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_SSM, IPBUS_SEL_WIDTH)); -- ssm / base 0x00002040 / mask 0x00003770
+    elsif std_match(addr, "------------------10-000-1010---") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_SSMCTRL, IPBUS_SEL_WIDTH)); -- ssmctrl / base 0x00002050 / mask 0x00003778
+    elsif std_match(addr, "------------------10-000-110----") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TDG, IPBUS_SEL_WIDTH)); -- tdg / base 0x00002060 / mask 0x00003770
+    elsif std_match(addr, "------------------10-000-1110---") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TDGCTRL, IPBUS_SEL_WIDTH)); -- tdgctrl / base 0x00002070 / mask 0x00003778
+    elsif std_match(addr, "------------------10-01---------") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_FLASH_SPI_RAM_0, IPBUS_SEL_WIDTH)); -- FLASH_SPI_Ram_0 / base 0x00002200 / mask 0x00003600
+    elsif std_match(addr, "------------------10-10---------") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_FLASH_SPI_RAM_1, IPBUS_SEL_WIDTH)); -- FLASH_SPI_Ram_1 / base 0x00002400 / mask 0x00003600
+    elsif std_match(addr, "------------------10-110--------") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCITCNTS, IPBUS_SEL_WIDTH)); -- ttcitcnts / base 0x00002600 / mask 0x00003700
+    elsif std_match(addr, "------------------10-111-000----") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCITCNTS_CHANNELA_BCRST, IPBUS_SEL_WIDTH)); -- ttcitcnts_channelA_BCRST / base 0x00002700 / mask 0x00003770
 -- END automatically generated VHDL
 
     else

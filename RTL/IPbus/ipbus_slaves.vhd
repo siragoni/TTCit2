@@ -186,6 +186,8 @@ architecture rtl of ipbus_slaves is
     signal ssmflag_q         : std_logic := '0';
     signal ssmflag_qq        : std_logic := '0';
     signal trigger_ssm_flag  : std_logic := '0';
+    signal trigger_ssm_vect  : std_logic_vector(31 downto 0) := (others => '0'); 
+    signal ssm_vect          : std_logic_vector(31 downto 0) := (others => '0'); 
 
    
     constant  active_s: boolean := true;  -- Comment: Enabled or disabled the  part of code 
@@ -222,7 +224,7 @@ stat_ctrl_regs: entity work.ipbus_ctrlreg_v
 		);
 
     stat(0) <= x"000000" & sn(7 downto 0); -- Board ID
-    stat(1) <= x"0d000700"; -- FW info: type[31:24] = xD->ttcit_logic, version[23:8] -> .., subversion[7:0] -> .. 
+    stat(1) <= x"0d000703"; -- FW info: type[31:24] = xD->ttcit_logic, version[23:8] -> .., subversion[7:0] -> .. 
     stat(2) <= x"0000000" & '0' & '0' & SI5345_INTR & SI5345_LOL ; -- STARUS reg
     stat(3) <= x"0000" & fpga_temperature;
     stat(4) <= x"0000" & fpga_vccaux;   
@@ -910,6 +912,10 @@ TriggerTypes_string: process(ttc_data_i.adr_e) is begin
                 transmission_4 <= '0'; 
                 transmission_5 <= '0'; 
                 transmission_6 <= '0'; 
+--                        trigger_ssm_flag   <= '0';
+--                        trigger_ssm_vect   <= (others => '0'); 
+                        ssm_vect   <= (others => '0'); 
+
 --           if    (transmission_0 = '0' and transmission_1 = '0' and transmission_2 = '0' and transmission_3 = '0' and transmission_4 = '0' and transmission_5 = '0' and transmission_6 = '0') then
 --                TriggerTypes(31 downto 24) <= ttc_data_i.adr_d8(7 downto 0);
 --                transmission_0 <= '1';                 
@@ -936,32 +942,54 @@ TriggerTypes_string: process(ttc_data_i.adr_e) is begin
                 Orbit_msg(11 downto 8)     <= ttc_data_i.adr_s8(3 downto 0);
                 Orbit_msg(7  downto 0)     <= ttc_data_i.adr_d8(7 downto 0);    
                 transmission_6 <= '1';        
-                ssm_flag     <= '1';                                 
+                ssm_flag     <= '1';   
+                   ssm_vect   <= (others => '1'); 
+                              
            end if;           
     end if;
 end process TriggerTypes_string;
 
   
   
+----======================================
+---- Initialise Trigger SSM flag
+----======================================
+--TriggerSSMflagprocess: process(clk_bc) is begin
+--if rising_edge(clk_bc) then
+--    ssmflag_q   <= ssm_flag;
+--    ssmflag_qq  <= ssmflag_q;
+--    chA_qqq <= chA_qq;
+--    if     (ssmflag_qq = '0' and ssmflag_q = '1') then  -- rising edge of the pulse
+--        trigger_ssm_flag <= '1';
+--    else
+--        trigger_ssm_flag <= '0';
+--        ssmflag_q   <= '0';
+--        ssmflag_qq  <= '0';
+--    end if;
+--end if;
+--end process TriggerSSMflagprocess;            
+
+  
 --======================================
 -- Initialise Trigger SSM flag
 --======================================
 TriggerSSMflagprocess: process(clk_bc) is begin
-if rising_edge(clk_bc) then
-    ssmflag_q   <= ssm_flag;
-    ssmflag_qq  <= ssmflag_q;
-    chA_qqq <= chA_qq;
-    if     (ssmflag_qq = '0' and ssmflag_q = '1') then  -- rising edge of the pulse
-        trigger_ssm_flag <= '1';
-    else
-        trigger_ssm_flag <= '0';
-        ssmflag_q   <= '0';
-        ssmflag_qq  <= '0';
-    end if;
+if (rising_edge(clk_bc)) then
+--    if (trigger_ssm_flag = '0' and transmission_6 = '1') then
+--    if ( transmission_6 = '1') then
+--    if ( ssm_flag = '1') then
+--        trigger_ssm_flag   <= '1';
+--        trigger_ssm_vect   <= (others => '1'); 
+        trigger_ssm_flag   <= ssm_flag;
+        trigger_ssm_vect   <= (others => ssm_flag); 
+
+--    else
+--        trigger_ssm_flag   <= '0';
+--        trigger_ssm_vect   <= (others => '0'); 
+--    end if;
 end if;
 end process TriggerSSMflagprocess;            
 
-  
             
             
 --======================================
@@ -977,11 +1005,21 @@ TF(0)           <= ttc_data_i.brc_d4(2) and ttc_data_i.brc_strobe;
 PP              <= ttc_data_i.brc_d4(3) and ttc_data_i.brc_strobe;
 
 
-inc_for_cnts(134 downto 123)<= BC_ID_msg(11    downto 0);    
-inc_for_cnts(122 downto 91)<= Orbit_msg(31    downto 0);    
-inc_for_cnts(90  downto 59)<= TriggerTypes(31 downto 0);     
+--inc_for_cnts(134 downto 123)<= BC_ID_msg(11    downto 0);    
+--inc_for_cnts(122 downto 91)<= Orbit_msg(31    downto 0);    
+--inc_for_cnts(90  downto 59)<= TriggerTypes(31 downto 0);     
 
-inc_for_cnts(58)           <= ssm_flag;
+--inc_for_cnts(134 downto 123)<= BC_ID_msg(11    downto 0) and trigger_ssm_vect(11    downto 0);    
+--inc_for_cnts(122 downto 91) <= Orbit_msg(31    downto 0) and trigger_ssm_vect(31    downto 0);    
+--inc_for_cnts(90  downto 59) <= TriggerTypes(31 downto 0) and trigger_ssm_vect(31    downto 0);     
+
+inc_for_cnts(134 downto 123)<= BC_ID_msg(11    downto 0) and (trigger_ssm_vect(11    downto 0) xor ssm_vect(11    downto 0));    
+inc_for_cnts(122 downto 91) <= Orbit_msg(31    downto 0) and (trigger_ssm_vect(31    downto 0) xor ssm_vect(31    downto 0));      
+inc_for_cnts(90  downto 59) <= TriggerTypes(31 downto 0) and (trigger_ssm_vect(31    downto 0) xor ssm_vect(31    downto 0));      
+
+
+--inc_for_cnts(58)           <= ssm_flag;
+inc_for_cnts(58)           <= ssm_flag and (trigger_ssm_flag xor ssm_flag);
 inc_for_cnts(57)           <= CAL_signal_proc;
 inc_for_cnts(56)           <= L1_signal_proc;
 inc_for_cnts(55)           <= L0_signal_proc;

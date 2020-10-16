@@ -98,7 +98,10 @@
     <node id="Outgoing"  address="0x100" mode="block" size="0x80" description="128word RAM" /> <!-- input command[7:0], address[23:0], data[31:0} -->
     <node id="Incoming"  address="0x180" mode="block" size="0x80" description="128word RAM" /> <!-- rubbish [31:0] + data [31:0] -->
   </node>
-  <node id="ttcitcnts" address="0x2600" description="Counters for outgoing signals" fwinfo="endpoint;width=6">
-    <node id="TTCitcnts" address="0x0" mode="block" size="0x40" description="48 TTCit counters" />
+  <node id="ttcitcnts" address="0x2600" description="Counters for outgoing signals" fwinfo="endpoint;width=8">
+    <node id="TTCitcnts" address="0x0" mode="block" size="0x100" description="135 TTCit counters, max. is 256" />
+  </node>
+  <node id="ttcitcnts_channelA_BCRST" address="0x2700" description="Counters for channel A in BCRST" fwinfo="endpoint;width=4">
+    <node id="TTCitcnts_channelA_BCRST" address="0x0" mode="block" size="0x10" description="16 TTCit counters in BCRST" />
   </node>
 </node>

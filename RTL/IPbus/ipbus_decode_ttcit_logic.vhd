@@ -17,7 +17,7 @@ package ipbus_decode_ttcit_logic is
   subtype ipbus_sel_t is std_logic_vector(IPBUS_SEL_WIDTH - 1 downto 0);
   function ipbus_sel_ttcit_logic(addr : in std_logic_vector(31 downto 0)) return ipbus_sel_t;
 
--- START automatically  generated VHDL the Wed Jan  8 09:28:08 2020 
+-- START automatically  generated VHDL the Tue May  5 14:21:39 2020 
   constant N_SLV_CTRL: integer := 0;
   constant N_SLV_ICAP: integer := 1;
   constant N_SLV_RAM: integer := 2;
@@ -34,7 +34,8 @@ package ipbus_decode_ttcit_logic is
   constant N_SLV_FLASH_SPI_RAM_0: integer := 13;
   constant N_SLV_FLASH_SPI_RAM_1: integer := 14;
   constant N_SLV_TTCITCNTS: integer := 15;
-  constant N_SLAVES: integer := 16;
+  constant N_SLV_TTCITCNTS_CHANNELA_BCRST: integer := 16;
+  constant N_SLAVES: integer := 17;
 -- END automatically generated VHDL
 
     
@@ -46,7 +47,7 @@ package body ipbus_decode_ttcit_logic is
     variable sel: ipbus_sel_t;
   begin
 
--- START automatically  generated VHDL the Wed Jan  8 09:28:08 2020 
+-- START automatically  generated VHDL the Tue May  5 14:21:39 2020 
     if    std_match(addr, "------------------00-000-000----") then
       sel := ipbus_sel_t(to_unsigned(N_SLV_CTRL, IPBUS_SEL_WIDTH)); -- ctrl / base 0x00000000 / mask 0x00003770
     elsif std_match(addr, "------------------00-001-0000---") then
@@ -77,8 +78,10 @@ package body ipbus_decode_ttcit_logic is
       sel := ipbus_sel_t(to_unsigned(N_SLV_FLASH_SPI_RAM_0, IPBUS_SEL_WIDTH)); -- FLASH_SPI_Ram_0 / base 0x00002200 / mask 0x00003600
     elsif std_match(addr, "------------------10-10---------") then
       sel := ipbus_sel_t(to_unsigned(N_SLV_FLASH_SPI_RAM_1, IPBUS_SEL_WIDTH)); -- FLASH_SPI_Ram_1 / base 0x00002400 / mask 0x00003600
-    elsif std_match(addr, "------------------10-110-0------") then
-      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCITCNTS, IPBUS_SEL_WIDTH)); -- ttcitcnts / base 0x00002600 / mask 0x00003740
+    elsif std_match(addr, "------------------10-110--------") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCITCNTS, IPBUS_SEL_WIDTH)); -- ttcitcnts / base 0x00002600 / mask 0x00003700
+    elsif std_match(addr, "------------------10-111-000----") then
+      sel := ipbus_sel_t(to_unsigned(N_SLV_TTCITCNTS_CHANNELA_BCRST, IPBUS_SEL_WIDTH)); -- ttcitcnts_channelA_BCRST / base 0x00002700 / mask 0x00003770
 -- END automatically generated VHDL
 
     else

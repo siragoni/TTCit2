@@ -836,33 +836,33 @@ ibuf_c_i_7: IBUFDS
 			o => test_clk_i_3
 		 );
 
---ibuf_c_1: IBUFDS
---		port map(
---			i => Si5345_OUT1_P,
---			ib => Si5345_OUT1_N,
---			o => test_clk_1
---		);
+ibuf_c_1: IBUFDS
+		port map(
+			i => Si5345_OUT1_P,
+			ib => Si5345_OUT1_N,
+			o => test_clk_1
+		);
 
---ibuf_c_5: IBUFDS
---		port map(
---			i => Si5345_OUT5_P,
---			ib => Si5345_OUT5_N,
---			o => test_clk_2
---		);
+ibuf_c_2: IBUFDS
+		port map(
+			i => Si5345_OUT2_P,
+			ib => Si5345_OUT2_N,
+			o => lhc_clk_240
+		);
                  
---ibuf_c_6: IBUFDS
---		port map(
---			i => Si5345_OUT6_P,
---			ib => Si5345_OUT6_N,
---			o => test_clk_3
---		);
+ibuf_c_3: IBUFDS
+		port map(
+			i => Si5345_OUT6_P,
+			ib => Si5345_OUT6_N,
+			o => test_clk_3
+		);
 		
---ibuf_c_8: IBUFDS
---        port map(
---           i => Si5345_OUT8_P,
---           ib => Si5345_OUT8_N,
---           o => test_clk_4
---        );
+ibuf_c_4: IBUFDS
+        port map(
+           i => Si5345_OUT8_P,
+           ib => Si5345_OUT8_N,
+           o => test_clk_4
+        );
 
 ibuf_orbit: IBUFDS
 		port map(

@@ -1039,7 +1039,10 @@ inc_for_cnts(43)           <= ttc_status_i.div_nrst;
 
 inc_for_cnts(42)           <= ttc_data_i.l1accept;   
 inc_for_cnts(41)           <= ttc_data_i.brc_strobe; 
-inc_for_cnts(40 downto 39) <= ttc_data_i.brc_t2; -- 2 bits     
+--inc_for_cnts(40 downto 39) <= ttc_data_i.brc_t2; -- 2 bits     
+inc_for_cnts(40)           <= ttc_data_i.brc_t2(1) and ttc_data_i.brc_strobe; 
+inc_for_cnts(39)           <= ttc_data_i.brc_t2(0) and ttc_data_i.brc_strobe;      
+
 inc_for_cnts(38 downto 35) <= ttc_data_i.brc_d4; -- 4 bits     
 inc_for_cnts(34)           <= ttc_data_i.brc_e;      
 inc_for_cnts(33)           <= ttc_data_i.brc_b;      
